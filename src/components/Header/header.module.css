@@ -1,0 +1,49 @@
+.header {
+  background: white;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  padding: 0;
+  grid-template-columns: auto 1fr;
+}
+
+.header > .back_btn {
+  justify-self: flex-start;
+  background: #001524;
+  padding: 0 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e02850;
+  font-size: 2rem;
+  border: none;
+  outline: none;
+  height: 100%;
+  border-radius: 0;
+}
+.header > .logo {
+  margin: 0.5rem 0 !important;
+  margin: 0;
+  color: #001524;
+  text-shadow: 1px 5px 0px #e02850;
+  font-family: "Press Start 2P", cursive;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 400;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.header > .logo > span:nth-child(1) {
+  animation: move1 var(--animation-duration) forwards infinite;
+  animation-delay: var(--animation-delay);
+}
+.header > .logo > span:nth-child(2) {
+  animation: move2 var(--animation-duration) forwards infinite;
+  animation-delay: var(--animation-delay);
+}
+.header > .logo > span:nth-child(3) {
+  animation: move3 var(--animation-duration) forwards infinite;
+  animation-delay: var(--animation-delay);
+}
