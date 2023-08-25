@@ -6,4 +6,5 @@ export type PostType = {
   description: string;
   image: string;
   links: string;
+  created_at: string;
 };

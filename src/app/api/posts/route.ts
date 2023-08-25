@@ -11,14 +11,36 @@ import {
 import { PostType } from "@/models/post";
 import { generateUUID } from "@/helpers/uuid";
 
+type PostResponseType = {
+  id: string;
+  name: string;
+  email: string;
+  title: string;
+  description: string;
+  image: string;
+  links: string;
+  created_at: {
+    seconds: number;
+    nanoseconds: number;
+  };
+};
+
 export async function GET(request: NextRequest) {
   try {
     // console.log("request :>> ", request.json());
     const q = query(collection(db, "posts"));
     const snapshots = await getDocs(q);
-    let data: PostType[] = snapshots.docs.map<PostType>(
-      (doc) => ({ ...doc.data(), id: doc.id } as unknown as PostType)
-    );
+    let data: PostType[] = snapshots.docs.map<PostType>((doc) => {
+      const postResponse = { ...doc.data(), id: doc.id } as PostResponseType;
+      const milliseconds =
+        postResponse.created_at.seconds * 1000 +
+        postResponse.created_at.nanoseconds / 1000000;
+      const post: PostType = {
+        ...postResponse,
+        created_at: new Date(milliseconds).toISOString(),
+      };
+      return post;
+    });
     return NextResponse.json({
       message: "Posts found",
       data,
