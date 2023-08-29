@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/firebase";
-import { query, collection, getDoc, doc } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 import { PostType } from "@/models/post";
 
 type PostResponseType = {
@@ -19,7 +19,8 @@ type PostResponseType = {
 
 export async function GET(request: NextRequest) {
   try {
-    const q = doc(db, "posts", "b147c11d-cdc2-4e9b-ad3a-55038188974f");
+    const id = request.url.slice(request.url.lastIndexOf("/") + 1);
+    const q = doc(db, "posts", id);
     const snapshot = await getDoc(q);
     if (snapshot.exists()) {
       const postResponse = {
