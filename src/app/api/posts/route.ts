@@ -68,6 +68,7 @@ export async function POST(request: NextRequest) {
     }
     await setDoc(docRef, {
       ...postBody,
+      created_at: Timestamp.now(),
     });
     return NextResponse.json({
       message: "Posts Added",
