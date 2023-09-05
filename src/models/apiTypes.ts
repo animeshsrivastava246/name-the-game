@@ -11,5 +11,4 @@ export type AddReplyRequestType = {
   name: string;
   email: string;
   description: string;
-  post_id: string;
 };

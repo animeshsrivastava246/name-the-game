@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/firebase";
 import { getDoc, doc } from "firebase/firestore";
 import { PostType } from "@/models/post";
+import { PostReplyType } from "@/models/reply";
 
 type PostResponseType = {
   id: string;
@@ -30,9 +31,14 @@ export async function GET(request: NextRequest) {
       const milliseconds =
         postResponse.created_at.seconds * 1000 +
         postResponse.created_at.nanoseconds / 1000000;
+      const repliesResp = await fetch(`${request.url}/replies`);
+      const replies = (await repliesResp
+        .json()
+        .then((res) => res.data)) as PostReplyType[];
       const data: PostType = {
         ...postResponse,
         created_at: new Date(milliseconds).toISOString(),
+        replies,
       };
       return NextResponse.json({
         message: "Post found",
