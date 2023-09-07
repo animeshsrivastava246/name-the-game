@@ -6,3 +6,9 @@ export type AddPostRequestType = {
   image: string;
   links: string;
 };
+
+export type AddReplyRequestType = {
+  name: string;
+  email: string;
+  description: string;
+};
