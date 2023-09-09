@@ -44,17 +44,15 @@ function PostCard({ post }: { post: PostType }) {
         <Typography gutterBottom variant="h5" component="h2">
           {post.title}
         </Typography>
-        <div
+        <Typography
           style={{
-            maxHeight: post.image && post.image.length > 0 ? "4rem" : "10rem",
-            overflow: "hidden",
-            width: "16.2rem",
+            height: post.image && post.image.length > 0 ? "4rem" : "10rem",
           }}
+          className={styles.post_description}
+          variant="caption"
         >
-          <Typography className={styles.post_description} variant="caption">
-            {post.description}
-          </Typography>
-        </div>
+          {post.description}
+        </Typography>
       </CardContent>
     </Card>
   );
