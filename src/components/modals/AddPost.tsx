@@ -5,7 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import "./modals.css";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { AddPostRequestType } from "@/models/apiTypes";
 
 function AddPost({
@@ -17,6 +17,7 @@ function AddPost({
   onClose: () => void;
   refresh: () => void;
 }) {
+  const [description, setDescription] = useState("");
   const formRef = useRef<HTMLFormElement>(null!);
 
   const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,6 +39,10 @@ function AddPost({
       refresh();
       onClose();
     }
+  };
+
+  const handleDescriptionChange = (value: string): void => {
+    setDescription(value.slice(0, 500));
   };
 
   return (
@@ -102,6 +107,8 @@ function AddPost({
             name="post_description"
             multiline
             rows={4}
+            value={description}
+            onChange={(e) => handleDescriptionChange(e.target.value)}
             variant="outlined"
             required
           />

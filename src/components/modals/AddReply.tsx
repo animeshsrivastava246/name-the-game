@@ -7,7 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import "./modals.css";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { AddReplyRequestType } from "@/models/apiTypes";
 
 function AddReply({
@@ -21,6 +21,7 @@ function AddReply({
   onClose: () => void;
   refresh: () => void;
 }) {
+  const [description, setDescription] = useState("");
   const formRef = useRef<HTMLFormElement>(null!);
 
   const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -39,6 +40,10 @@ function AddReply({
       onClose();
     }
   };
+  const handleDescriptionChange = (value: string): void => {
+    setDescription(value.slice(0, 200));
+  };
+
   return (
     <Dialog
       className={`modal add-reply-modal`}
@@ -77,6 +82,8 @@ function AddReply({
             multiline
             rows={4}
             variant="outlined"
+            value={description}
+            onChange={(e) => handleDescriptionChange(e.target.value)}
             required
           />
         </DialogContent>
