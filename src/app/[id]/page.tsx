@@ -31,6 +31,8 @@ function PostPage() {
         onClose={() => {
           setIsAddPostOpen(false);
         }}
+        refresh={getPost}
+        postId={post.id}
       />
       <Header />
       <div className={styles.post_body}>
