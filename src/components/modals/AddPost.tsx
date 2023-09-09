@@ -57,6 +57,7 @@ function AddPost({
             label="Post Title"
             name="post_title"
             variant="outlined"
+            required
           />
           <TextField
             color="primary"
@@ -65,6 +66,7 @@ function AddPost({
             label="Your Name"
             name="author_name"
             variant="outlined"
+            required
           />
           <TextField
             color="primary"
@@ -74,6 +76,7 @@ function AddPost({
             name="author_email"
             type="email"
             variant="outlined"
+            required
           />
           <TextField
             color="primary"
@@ -100,6 +103,7 @@ function AddPost({
             multiline
             rows={4}
             variant="outlined"
+            required
           />
         </DialogContent>
         <DialogActions>

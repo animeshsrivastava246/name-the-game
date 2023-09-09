@@ -56,6 +56,7 @@ function AddReply({
             label="Your Name"
             name="author_name"
             variant="outlined"
+            required
           />
           <TextField
             color="primary"
@@ -65,6 +66,7 @@ function AddReply({
             name="author_email"
             type="email"
             variant="outlined"
+            required
           />
           <TextField
             color="primary"
@@ -75,6 +77,7 @@ function AddReply({
             multiline
             rows={4}
             variant="outlined"
+            required
           />
         </DialogContent>
         <DialogActions>
