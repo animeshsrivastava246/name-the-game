@@ -1,6 +1,6 @@
-import { PostReplyType } from "../../types/postType";
 import { Typography } from "@mui/material";
 import styles from "./card.module.css";
+import { PostReplyType } from "@/models/reply";
 
 function PostReplyCard({ reply }: { reply: PostReplyType }) {
   return (
