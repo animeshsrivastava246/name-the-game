@@ -61,8 +61,7 @@ export async function POST(request: NextRequest) {
       !postBody.name ||
       !postBody.email ||
       !postBody.title ||
-      !postBody.description ||
-      !postBody.image
+      !postBody.description
     ) {
       throw new Error("Please fill all the fields");
     }

@@ -1,4 +1,3 @@
-import { PostType } from "../../types/postType";
 import {
   Card,
   CardContent,
@@ -8,6 +7,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import styles from "./card.module.css";
+import { PostType } from "@/models/post";
 
 function PostCard({ post }: { post: PostType }) {
   const theme = useTheme();
@@ -36,6 +36,7 @@ function PostCard({ post }: { post: PostType }) {
           sx={{
             pt: "56.25%",
           }}
+          className={styles.post_image}
           image={post.image}
         />
       ) : null}
@@ -45,13 +46,9 @@ function PostCard({ post }: { post: PostType }) {
         </Typography>
         <Typography
           style={{
-            display: "inline-block",
-            width: "100%",
-            maxHeight: post.image && post.image.length > 0 ? "4rem" : "10rem",
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-            whiteSpace: "break-spaces",
+            height: post.image && post.image.length > 0 ? "4rem" : "10rem",
           }}
+          className={styles.post_description}
           variant="caption"
         >
           {post.description}
