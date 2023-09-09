@@ -1,0 +1,12 @@
+.post_image {
+  background-position: center;
+  background-size: cover;
+}
+
+.post_description {
+  display: inline-block;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: break-spaces;
+}

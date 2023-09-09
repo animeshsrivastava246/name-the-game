@@ -36,6 +36,7 @@ function PostCard({ post }: { post: PostType }) {
           sx={{
             pt: "56.25%",
           }}
+          className={styles.post_image}
           image={post.image}
         />
       ) : null}
@@ -43,19 +44,17 @@ function PostCard({ post }: { post: PostType }) {
         <Typography gutterBottom variant="h5" component="h2">
           {post.title}
         </Typography>
-        <Typography
+        <div
           style={{
-            display: "inline-block",
-            width: "100%",
             maxHeight: post.image && post.image.length > 0 ? "4rem" : "10rem",
-            textOverflow: "ellipsis",
             overflow: "hidden",
-            whiteSpace: "break-spaces",
+            width: "16.2rem",
           }}
-          variant="caption"
         >
-          {post.description}
-        </Typography>
+          <Typography className={styles.post_description} variant="caption">
+            {post.description}
+          </Typography>
+        </div>
       </CardContent>
     </Card>
   );
