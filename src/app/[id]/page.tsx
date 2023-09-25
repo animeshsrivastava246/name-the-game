@@ -45,7 +45,7 @@ function PostPage() {
           <Grid className={styles.post_info} item flex={1}>
             <Typography variant="h3">{post.title}</Typography>
             <Typography variant="caption">
-              10 mins ago | July 14, 2023
+			{`${post.created_at.split('T')[0]} | ${post.created_at.split('T')[1]}`}
             </Typography>
             <Typography variant="h6">
               <span>By:</span> {post.name}

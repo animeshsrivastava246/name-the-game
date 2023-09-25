@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
         postResponse.created_at.nanoseconds / 1000000;
       const post: PostType = {
         ...postResponse,
-        created_at: new Date(milliseconds).toISOString(),
+        created_at: new Date(milliseconds).toISOString(), // calculate date from ISO
       };
       return post;
     });
