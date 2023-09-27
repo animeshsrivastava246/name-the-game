@@ -11,6 +11,7 @@ import {
 import { PostType } from "@/models/post";
 import { generateUUID } from "@/helpers/uuid";
 import { AddPostRequestType } from "@/models/apiTypes";
+import moment from 'moment';
 
 type PostResponseType = {
   id: string;
@@ -38,7 +39,8 @@ export async function GET(request: NextRequest) {
         postResponse.created_at.nanoseconds / 1000000;
       const post: PostType = {
         ...postResponse,
-        created_at: new Date(milliseconds).toISOString(), // calculate date from ISO
+        // created_at: new Date(milliseconds).toISOString(), // calculate date from ISO
+        created_at: moment(new Date(milliseconds).toISOString()).fromNow(), // calculate date from ISO
       };
       return post;
     });

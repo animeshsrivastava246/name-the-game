@@ -25,7 +25,8 @@ function PostCard({ post }: { post: PostType }) {
     >
       <CardHeader
         title={post.name}
-        subheader={`${post.created_at.split('T')[0]} | ${post.created_at.split('T')[1]}`}
+        // subheader={`${post.created_at.split('T')[0]} | ${post.created_at.split('T')[1]}`}
+        subheader={post.created_at}
         style={{
           borderBottom: `1px solid ${theme.palette.divider}`,
         }}
