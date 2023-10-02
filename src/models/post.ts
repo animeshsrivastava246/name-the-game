@@ -1,3 +1,5 @@
+import { PostReplyType } from "./reply";
+
 export type PostType = {
   id: string;
   name: string;
@@ -6,4 +8,6 @@ export type PostType = {
   description: string;
   image: string;
   links: string;
+  created_at: string;
+  replies?: PostReplyType[];
 };

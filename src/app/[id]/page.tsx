@@ -2,43 +2,26 @@
 import { useState, useEffect } from "react";
 import { Button, Typography, Grid } from "@mui/material";
 import { PostType } from "./../../models/post";
-import { PostReplyType } from "./../../models/reply";
 import AddReply from "./../../components/modals/AddReply";
 import PostReplyCard from "./../../components/PostReplyCard/PostReplyCard";
-import { POSTS } from "../page";
 import { useParams } from "next/navigation";
 import styles from "./page.module.css";
 import Header from "./../../components/Header/Header";
-
-const REPLIES: PostReplyType[] = [
-  {
-    id: "1",
-    name: "Kushagra Agnihotri",
-    email: "kushagra@gmail.com",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis modi minus distinctio nihil quaerat beatae perferendis nulla aliabss vooluptatum.",
-  },
-  {
-    id: "2",
-    name: "Kushagra Agnihotri",
-    email: "kushagra@gmail.com",
-    description: "Lorem ipsum.",
-  },
-  {
-    id: "3",
-    name: "Kushagra Agnihotri",
-    email: "kushagra@gmail.com",
-    description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-  },
-];
 
 function PostPage() {
   const [isAddPostOpen, setIsAddPostOpen] = useState(false);
   const [post, setPost] = useState<PostType>();
   const params = useParams();
 
+  const getPost = async () => {
+    const resp = await fetch(`/api/posts/${params.id}`);
+    const data = await resp.json();
+    setPost(data.data);
+  };
+
   useEffect(() => {
-    if (POSTS) setPost(POSTS.find((p) => p.id === params.id));
+    getPost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
 
   return post ? (
@@ -48,6 +31,8 @@ function PostPage() {
         onClose={() => {
           setIsAddPostOpen(false);
         }}
+        refresh={getPost}
+        postId={post.id}
       />
       <Header />
       <div className={styles.post_body}>
@@ -60,7 +45,7 @@ function PostPage() {
           <Grid className={styles.post_info} item flex={1}>
             <Typography variant="h3">{post.title}</Typography>
             <Typography variant="caption">
-              10 mins ago | July 14, 2023
+			{`${post.created_at.split('T')[0]} | ${post.created_at.split('T')[1]}`}
             </Typography>
             <Typography variant="h6">
               <span>By:</span> {post.name}
@@ -92,16 +77,20 @@ function PostPage() {
       <div className={styles.post_replies}>
         <div className={styles.replies_header}>
           <Typography variant="h4">
-            replies <span>({REPLIES.length})</span>
+            replies <span>({post.replies ? post.replies.length : 0})</span>
           </Typography>
           <Button onClick={() => setIsAddPostOpen(true)} variant="text">
             Help The Fellow Gamer!
           </Button>
         </div>
         <div className={styles.replies_container}>
-          {REPLIES.map((reply) => (
-            <PostReplyCard key={reply.id} reply={reply} />
-          ))}
+          {post.replies && post.replies.length > 0 ? (
+            post.replies.map((reply) => (
+              <PostReplyCard key={reply.id} reply={reply} />
+            ))
+          ) : (
+            <p>No Replies</p>
+          )}
         </div>
       </div>
     </>
