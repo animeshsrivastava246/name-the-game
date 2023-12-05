@@ -3,6 +3,7 @@ import { db } from "@/firebase";
 import { getDoc, doc } from "firebase/firestore";
 import { PostType } from "@/models/post";
 import { PostReplyType } from "@/models/reply";
+import moment from "moment";
 
 type PostResponseType = {
   id: string;
@@ -37,7 +38,7 @@ export async function GET(request: NextRequest) {
         .then((res) => res.data)) as PostReplyType[];
       const data: PostType = {
         ...postResponse,
-        created_at: new Date(milliseconds).toISOString(),
+        created_at: moment(new Date(milliseconds).toISOString()).fromNow(),
         replies,
       };
       return NextResponse.json({

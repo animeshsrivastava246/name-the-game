@@ -12,6 +12,7 @@ import {
 import { PostReplyType } from "@/models/reply";
 import { generateUUID } from "@/helpers/uuid";
 import { AddPostRequestType, AddReplyRequestType } from "@/models/apiTypes";
+import moment from "moment"
 
 type ReplyResponseType = {
   id: string;
@@ -38,7 +39,7 @@ export async function GET(request: NextRequest) {
         postResponse.created_at.nanoseconds / 1000000;
       const reply: PostReplyType = {
         ...postResponse,
-        created_at: new Date(milliseconds).toISOString(),
+        created_at: moment(new Date(milliseconds).toISOString()).fromNow(),
       };
       return reply;
     });
