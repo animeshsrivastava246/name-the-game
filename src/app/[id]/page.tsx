@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Button, Typography, Grid } from "@mui/material";
+import { Button, Typography, Grid, CircularProgress } from "@mui/material";
 import { PostType } from "./../../models/post";
 import AddReply from "./../../components/modals/AddReply";
 import PostReplyCard from "./../../components/PostReplyCard/PostReplyCard";
@@ -92,7 +92,20 @@ function PostPage() {
 				</div>
 			</div>
 		</>
-	) : null;
+	) : (
+		<div
+			style={{
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "center",
+				width: "99vw",
+				height: "80vh",
+				padding: "4rem 0",
+			}}
+		>
+			<CircularProgress size={100} color="secondary" />
+		</div>
+	);
 }
 
 export default PostPage;
