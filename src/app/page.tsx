@@ -74,7 +74,7 @@ const Home = () => {
 							alignItems: "center",
 							justifyContent: "center",
 							width: "100%",
-              padding: "4rem 0"
+							padding: "4rem 0",
 						}}
 					>
 						<CircularProgress size={100} color="secondary" />
