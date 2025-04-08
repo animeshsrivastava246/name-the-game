@@ -7,20 +7,20 @@ import theme from "./muiTheme";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Name The Game",
-  description: "Your daily dose of gaming trivia",
+	title: "Name The Game",
+	description: "Your daily dose of gaming trivia",
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return (
-    <ThemeProvider theme={theme}>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </ThemeProvider>
-  );
+	return (
+		<ThemeProvider theme={theme}>
+			<html lang="en">
+				<body className={inter.className}>{children}</body>
+			</html>
+		</ThemeProvider>
+	);
 }
