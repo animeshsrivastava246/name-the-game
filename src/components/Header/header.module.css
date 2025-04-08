@@ -1,49 +1,93 @@
 .header {
-  background: white;
-  width: 100%;
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  padding: 0;
-  grid-template-columns: auto 1fr;
+	background: var(--white);
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.75rem 1.5rem;
+	gap: 1rem;
+	flex-wrap: wrap;
 }
 
 .header > .back_btn {
-  justify-self: flex-start;
-  background: #001524;
-  padding: 0 2.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #e02850;
-  font-size: 2rem;
-  border: none;
-  outline: none;
-  height: 100%;
-  border-radius: 0;
-}
-.header > .logo {
-  margin: 0.5rem 0 !important;
-  margin: 0;
-  color: #001524;
-  text-shadow: 1px 5px 0px #e02850;
-  font-family: "Press Start 2P", cursive;
-  font-size: 3rem;
-  font-style: normal;
-  font-weight: 400;
-  display: flex;
-  gap: 1.5rem;
+	background: var(--primary);
+	padding: 0.5rem 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--accent);
+	font-size: 1.5rem;
+	border: none;
+	outline: none;
+	height: 100%;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: background 0.3s ease;
 }
 
+.header > .back_btn:hover {
+	background: #0b1d30; /* Slightly lighter hover color */
+}
+
+.header > .logo {
+	color: var(--primary);
+	text-shadow: 1px 5px 0px var(--accent);
+	font-family: "Press Start 2P", cursive;
+	font-size: clamp(1.5rem, 5vw, 3rem);
+	font-weight: 400;
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+/* Animated spans */
 .header > .logo > span:nth-child(1) {
-  animation: move1 var(--animation-duration) forwards infinite;
-  animation-delay: var(--animation-delay);
+	animation: move1 var(--animation-duration) ease-in-out infinite;
+	animation-delay: var(--animation-delay);
 }
 .header > .logo > span:nth-child(2) {
-  animation: move2 var(--animation-duration) forwards infinite;
-  animation-delay: var(--animation-delay);
+	animation: move2 var(--animation-duration) ease-in-out infinite;
+	animation-delay: var(--animation-delay);
 }
 .header > .logo > span:nth-child(3) {
-  animation: move3 var(--animation-duration) forwards infinite;
-  animation-delay: var(--animation-delay);
+	animation: move3 var(--animation-duration) ease-in-out infinite;
+	animation-delay: var(--animation-delay);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+	.header {
+		justify-content: center;
+		gap: 1rem;
+		padding: 1rem;
+	}
+
+	.header > .back_btn {
+		font-size: 1.25rem;
+		padding: 0.5rem 1rem;
+	}
+
+	.header > .logo {
+		font-size: clamp(1.25rem, 4.5vw, 2.25rem);
+		flex-direction: row;
+	}
+}
+
+@media (max-width: 480px) {
+	.header {
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.header > .back_btn {
+		width: 100%;
+		justify-content: center;
+	}
+
+	.header > .logo {
+		font-size: clamp(1rem, 5vw, 2rem);
+	}
 }

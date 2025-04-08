@@ -1,21 +1,22 @@
+/* HERO SECTION */
 .hero {
 	background: var(--white);
 	width: 100%;
 	display: flex;
-	gap: 2rem;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	gap: 2rem;
 	padding: 2rem;
+	text-align: center;
 }
 
 .hero > .logo {
 	margin: 0;
 	color: var(--primary);
-	text-shadow: 1px 5px 0px var(--accent);
+	text-shadow: 1px 5px 0 var(--accent);
 	font-family: "Press Start 2P", cursive;
-	font-size: 4rem;
-	font-style: normal;
+	font-size: clamp(2rem, 6vw, 4rem);
 	font-weight: 400;
 	display: flex;
 	gap: 1.5rem;
@@ -24,24 +25,28 @@
 .hero > .logo > span {
 	--animation-duration: 5s;
 	--animation-delay: 10s;
+	display: inline-block;
 }
+
+/* Individual letter animations */
 .hero > .logo > span:nth-child(1) {
-	animation: move1 var(--animation-duration) forwards infinite;
+	animation: move1 var(--animation-duration) ease-in-out infinite;
 	animation-delay: var(--animation-delay);
 }
 .hero > .logo > span:nth-child(2) {
-	animation: move2 var(--animation-duration) forwards infinite;
+	animation: move2 var(--animation-duration) ease-in-out infinite;
 	animation-delay: var(--animation-delay);
 }
 .hero > .logo > span:nth-child(3) {
-	animation: move3 var(--animation-duration) forwards infinite;
+	animation: move3 var(--animation-duration) ease-in-out infinite;
 	animation-delay: var(--animation-delay);
 }
 
 .hero > .hero_sub {
-	width: 40%;
-	text-align: center;
+	width: 60%;
+	max-width: 700px;
 	color: var(--primary);
+	font-size: 1rem;
 }
 
 @keyframes move1 {
@@ -78,27 +83,70 @@
 	}
 }
 
+/* MAIN SECTION */
 .main {
 	padding: 1.75rem 4.125rem;
 }
+
 .main > .actions {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
+	gap: 1rem;
 }
 
+/* POSTS GRID */
 .posts_container {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 1.5rem;
 	margin-top: 2rem;
-	gap: 1rem;
 	align-items: stretch;
-	justify-content: space-around;
 }
+
 .posts_container > .post_card {
-	flex: 1;
 	text-decoration: none;
-}
-.posts_container > .post_card > div {
 	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Ensures the inner content takes full height */
+.posts_container > .post_card > div {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+	.hero > .hero_sub {
+		width: 80%;
+	}
+
+	.main {
+		padding: 1.5rem 2rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.hero {
+		padding: 1rem;
+	}
+
+	.hero > .logo {
+		flex-direction: column;
+		gap: 0.75rem;
+		text-align: center;
+	}
+
+	.hero > .hero_sub {
+		width: 100%;
+		font-size: 0.9rem;
+	}
+
+	.main {
+		padding: 1rem;
+	}
 }

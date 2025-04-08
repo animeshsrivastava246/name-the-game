@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
 :root {
-  --primary: #001524;
-  --secondary: #1d253e;
-  --white: #f1f2fd;
-  --accent: #e02850;
+  --primary: #121212;      /* Dark, smooth background */
+  --secondary: #1f1f2e;    /* Muted secondary surface */
+  --white: #f5f7fa;        /* Clean, soft white */
+  --accent: #ff6b81;       /* Fresh, vibrant accent */
 }
 
 * {
