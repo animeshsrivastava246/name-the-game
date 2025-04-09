@@ -6,10 +6,10 @@ import theme from "./muiTheme";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-	title: "Name The Game",
-	description: "Your daily dose of gaming trivia",
-};
+// export const metadata = {
+// 	title: "Name The Game",
+// 	description: "Your daily dose of gaming trivia",
+// };
 
 export default function RootLayout({
 	children,
