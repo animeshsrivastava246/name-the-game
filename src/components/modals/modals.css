@@ -1,20 +1,68 @@
-.modal > div > div {
-  padding: 1rem 2rem;
-  background: var(--secondary);
-  color: var(--white);
-}
-.modal > div > div > form > .MuiDialogContent-root {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding: 1rem 2rem !important;
-  gap: 1rem;
-}
-.modal > div > div > form > .MuiDialogContent-root > .title-input,
-.modal > div > div > form > .MuiDialogContent-root > .description-input {
-  grid-column: 1/3;
+/* Modal container */
+.modal .MuiPaper-root {
+	background-color: var(--secondary, #1e1e2f);
+	color: var(--white, #ffffff);
+	padding: 2rem;
+	border-radius: 12px;
+	max-width: 700px;
+	width: 90%;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.modal > div > div > form > div > button {
-  background: var(--accent);
-  color: var(--white);
+/* Modal content grid */
+.modal .MuiDialogContent-root {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+	margin-top: 1rem;
+	padding: 0 !important;
+}
+
+/* Full-width inputs */
+.modal .title-input,
+.modal .description-input {
+	grid-column: 1 / 3;
+}
+
+/* Input text color */
+.modal .MuiInputBase-root input,
+.modal .MuiInputBase-root textarea {
+	color: var(--white, #ffffff);
+}
+
+/* Input label color */
+.modal .MuiInputLabel-root {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+/* Input outline styling */
+.modal .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+	border-color: rgba(255, 255, 255, 0.4);
+}
+
+.modal .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+	border-color: var(--accent, #ff5722);
+}
+
+.modal .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+	border-color: var(--accent, #ff5722);
+}
+
+/* Dialog actions */
+.modal .MuiDialogActions-root {
+	justify-content: space-between;
+	margin-top: 1rem;
+}
+
+/* Buttons */
+.modal button {
+	background-color: var(--accent, #ff5722);
+	color: var(--white, #ffffff);
+	font-weight: bold;
+	text-transform: none;
+	transition: background-color 0.3s ease;
+}
+
+.modal button:hover {
+	background-color: #ff6f3f;
 }
