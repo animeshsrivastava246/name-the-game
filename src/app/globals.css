@@ -1,19 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 :root {
-  --primary: #121212;      /* Dark, smooth background */
-  --secondary: #1f1f2e;    /* Muted secondary surface */
-  --white: #f5f7fa;        /* Clean, soft white */
-  --accent: #ff6b81;       /* Fresh, vibrant accent */
+	--primary: #121212; /* Dark, smooth background */
+	--secondary: #1f1f2e; /* Muted secondary surface */
+	--white: #f5f7fa; /* Clean, soft white */
+	--accent: #ff6b81; /* Fresh, vibrant accent */
+	--radius: 0.75rem;
+	--shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+	--transition: 0.3s ease-in-out;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  background: var(--primary);
-  color: var(--white);
+	background: var(--primary);
+	color: var(--white);
 }

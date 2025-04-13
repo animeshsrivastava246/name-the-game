@@ -1,152 +1,145 @@
-/* HERO SECTION */
-.hero {
-	background: var(--white);
+
+  /* HERO SECTION */
+  .hero {
+	background-color: var(--primary);
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	padding: 3rem 1.5rem;
 	gap: 2rem;
-	padding: 2rem;
 	text-align: center;
-}
-
-.hero > .logo {
-	margin: 0;
-	color: var(--primary);
-	text-shadow: 1px 5px 0 var(--accent);
+	color: var(--white);
+  }
+  
+  .logo {
+	color: var(--white);
 	font-family: "Press Start 2P", cursive;
-	font-size: clamp(2rem, 6vw, 4rem);
+	font-size: clamp(2.5rem, 6vw, 4rem);
 	font-weight: 400;
 	display: flex;
-	gap: 1.5rem;
-}
-
-.hero > .logo > span {
-	--animation-duration: 5s;
-	--animation-delay: 10s;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1rem;
+	text-shadow: 2px 4px 0 var(--accent);
+	transition: transform var(--transition);
+  }
+  
+  .logo:hover {
+	transform: scale(1.05);
+  }
+  
+  .logo > span {
 	display: inline-block;
-}
-
-/* Individual letter animations */
-.hero > .logo > span:nth-child(1) {
-	animation: move1 var(--animation-duration) ease-in-out infinite;
-	animation-delay: var(--animation-delay);
-}
-.hero > .logo > span:nth-child(2) {
-	animation: move2 var(--animation-duration) ease-in-out infinite;
-	animation-delay: var(--animation-delay);
-}
-.hero > .logo > span:nth-child(3) {
-	animation: move3 var(--animation-duration) ease-in-out infinite;
-	animation-delay: var(--animation-delay);
-}
-
-.hero > .hero_sub {
-	width: 60%;
+	animation-duration: 6s;
+	animation-iteration-count: infinite;
+  }
+  
+  .logo > span:nth-child(1) {
+	animation-name: wave1;
+  }
+  .logo > span:nth-child(2) {
+	animation-name: wave2;
+  }
+  .logo > span:nth-child(3) {
+	animation-name: wave3;
+  }
+  
+  .hero_sub {
+	color: var(--white);
 	max-width: 700px;
-	color: var(--primary);
-	font-size: 1rem;
-}
-
-@keyframes move1 {
-	0% {
-		order: 0;
-	}
-	50% {
-		order: 1;
-	}
-	100% {
-		order: 2;
-	}
-}
-@keyframes move2 {
-	0% {
-		order: 1;
-	}
-	50% {
-		order: 2;
-	}
-	100% {
-		order: 0;
-	}
-}
-@keyframes move3 {
-	0% {
-		order: 2;
-	}
-	50% {
-		order: 0;
-	}
-	100% {
-		order: 1;
-	}
-}
-
-/* MAIN SECTION */
-.main {
-	padding: 1.75rem 4.125rem;
-}
-
-.main > .actions {
+	font-size: 1.125rem;
+	line-height: 1.6;
+	margin: 0 auto;
+	width: 90%;
+	opacity: 0.9;
+  }
+  
+  /* KEYFRAMES */
+  @keyframes wave1 {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes wave2 {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-15px); }
+  }
+  
+  @keyframes wave3 {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-12px); }
+  }
+  
+  /* MAIN SECTION */
+  .main {
+	padding: 2rem clamp(1rem, 5vw, 4rem);
+	background-color: var(--secondary);
+	color: var(--white);
+  }
+  
+  /* ACTIONS */
+  .actions {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
 	gap: 1rem;
-}
-
-/* POSTS GRID */
-.posts_container {
+	margin-bottom: 2rem;
+  }
+  
+  /* POSTS GRID */
+  .posts_container {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-	gap: 1.5rem;
-	margin-top: 2rem;
-	align-items: stretch;
-}
-
-.posts_container > .post_card {
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 2rem;
+  }
+  
+  /* POST CARD */
+  .post_card {
 	text-decoration: none;
-	height: 100%;
+	background-color: var(--primary);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow);
+	overflow: hidden;
+	transition: transform var(--transition), box-shadow var(--transition);
 	display: flex;
 	flex-direction: column;
-}
-
-/* Ensures the inner content takes full height */
-.posts_container > .post_card > div {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-}
-
-/* MEDIA QUERIES */
-@media (max-width: 768px) {
-	.hero > .hero_sub {
-		width: 80%;
+	color: var(--white);
+  }
+  
+  .post_card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+	.hero_sub {
+	  width: 85%;
+	  font-size: 1rem;
 	}
-
-	.main {
-		padding: 1.5rem 2rem;
-	}
-}
-
-@media (max-width: 480px) {
+  }
+  
+  @media (max-width: 480px) {
 	.hero {
-		padding: 1rem;
+	  padding: 2rem 1rem;
 	}
-
-	.hero > .logo {
-		flex-direction: column;
-		gap: 0.75rem;
-		text-align: center;
+  
+	.logo {
+	  flex-direction: column;
+	  gap: 0.5rem;
+	  font-size: clamp(2rem, 8vw, 3rem);
 	}
-
-	.hero > .hero_sub {
-		width: 100%;
-		font-size: 0.9rem;
+  
+	.hero_sub {
+	  width: 100%;
+	  font-size: 0.95rem;
 	}
-
+  
 	.main {
-		padding: 1rem;
+	  padding: 1.5rem 1rem;
 	}
-}
+  }
+  
