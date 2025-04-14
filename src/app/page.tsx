@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import styles from "./page.module.css";
 import { Button, CircularProgress, Typography } from "@mui/material";
 import PostCard from "./../components/PostCard/PostCard";
@@ -14,25 +14,28 @@ const Home = () => {
 	const [posts, setPosts] = useState<PostType[]>([]);
 	const theme = useTheme();
 
-	const getPosts = async () => {
-		setIsLoading(true);
-		const resp = await fetch("/api/posts");
-		const data = await resp.json();
-		setPosts(data.data);
-		setIsLoading(false);
-	};
+	const getPosts = useCallback(async () => {
+		try {
+			setIsLoading(true);
+			const resp = await fetch("/api/posts");
+			const data = await resp.json();
+			setPosts(data.data);
+		} catch (error) {
+			console.error("Failed to fetch posts", error);
+		} finally {
+			setIsLoading(false);
+		}
+	}, []);
 
 	useEffect(() => {
 		getPosts();
-	}, []);
+	}, [getPosts]);
 
 	return (
 		<>
 			<AddPost
 				isOpen={isAddPostOpen}
-				onClose={() => {
-					setIsAddPostOpen(false);
-				}}
+				onClose={() => setIsAddPostOpen(false)}
 				refresh={getPosts}
 			/>
 			<div className={styles.hero}>
@@ -42,7 +45,7 @@ const Home = () => {
 					<span>Game</span>
 				</h1>
 				<Typography className={styles.hero_sub} variant="h6">
-					{` A community to identify games from photos or description. Seen a game?
+					{` A community to identify games from photos or description. Seen a game? 
           Don't remember the name? Do Not Worry Gamer We'll Tell You!`}
 				</Typography>
 			</div>
@@ -68,20 +71,12 @@ const Home = () => {
 					</Button>
 				</div>
 				{isLoading ? (
-					<div
-						style={{
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
-							width: "100%",
-							padding: "4rem 0",
-						}}
-					>
+					<div className={styles.loadingContainer}>
 						<CircularProgress size={100} color="secondary" />
 					</div>
 				) : (
 					<div className={styles.posts_container}>
-						{posts.map((post, i) => (
+						{posts.map((post) => (
 							<Link
 								href={`/${post.id}`}
 								key={post.id}
