@@ -1,17 +1,12 @@
-"use client";
 import { ThemeProvider } from "@emotion/react";
-// import { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import theme from "./muiTheme";
+import { metadata } from "./metadata";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// export const metadata: Metadata = {
-// 	title: "NameTheGame",
-// 	description: "A community to identify games from photos or description.",
-// 	metadataBase: new URL("https://name-the-game.vercel.app/"),
-// };
+export { metadata };
 
 export default function RootLayout({
 	children,
@@ -19,10 +14,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<ThemeProvider theme={theme}>
-			<html lang="en">
-				<body className={inter.className}>{children}</body>
-			</html>
-		</ThemeProvider>
+		<html lang="en">
+			<body className={inter.className}>
+				<ThemeProvider theme={theme}>{children}</ThemeProvider>
+			</body>
+		</html>
 	);
 }
