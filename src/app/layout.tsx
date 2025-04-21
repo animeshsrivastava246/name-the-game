@@ -41,6 +41,8 @@ export default function RootLayout({
 				<meta name="twitter:card" content={metadata.twitter.card} />
 				<meta name="twitter:title" content={metadata.twitter.title} />
 				<meta name="twitter:description" content={metadata.twitter.description} />
+				<link rel="icon" href="/favicon.ico" />
+				<link rel="manifest" href="/manifest.webmanifest" />
 			</Head>
 			<body className={inter.className}>
 				<ThemeProvider theme={theme}>{children}</ThemeProvider>

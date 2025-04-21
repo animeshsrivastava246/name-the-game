@@ -7,6 +7,7 @@ import PostReplyCard from "./../../components/PostReplyCard/PostReplyCard";
 import { useParams } from "next/navigation";
 import styles from "./page.module.css";
 import Header from "./../../components/Header/Header";
+import Image from "next/image";
 
 function PostPage() {
 	const [isAddPostOpen, setIsAddPostOpen] = useState(false);
@@ -38,7 +39,7 @@ function PostPage() {
 			<div className={styles.post_body}>
 				{post.image && post.image.length > 0 ? (
 					<div className={styles.background_container}>
-						<img src={post.image} className={styles.background_image} />
+						<Image src={post.image} className={styles.background_image} alt="Post Image" width={500} height={300} />
 					</div>
 				) : null}
 				<Grid className={styles.post_details} container>
@@ -64,7 +65,7 @@ function PostPage() {
 						</Typography>
 					</Grid>
 					<Grid item>
-						<img
+						<Image
 							src={post.image}
 							className={styles.post_image}
 							alt={post.title}

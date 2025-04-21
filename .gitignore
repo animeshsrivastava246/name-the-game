@@ -65,7 +65,6 @@ ehthumbs.db
 
 # other build directories
 /dist/
-/public/
 
 # log files
 *.log
