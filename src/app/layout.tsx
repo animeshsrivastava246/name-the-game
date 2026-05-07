@@ -1,12 +1,12 @@
 // app/layout.tsx
-import { ThemeProvider } from "@emotion/react";
+import { Providers } from "@/components/Providers";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import theme from "./muiTheme";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
+  metadataBase: new URL("https://name-the-game.vercel.app"),
   title: "NameTheGame",
   description: "A community to identify games from photos or description.",
   openGraph: {
@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

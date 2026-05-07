@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@mui/material";
 import styles from "./header.module.css";
 import { useRouter } from "next/navigation";
