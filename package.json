@@ -17,6 +17,8 @@
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
     "@types/uuid": "^9.0.2",
+    "baseline-browser-mapping": "^2.10.27",
+    "caniuse-lite": "^1.0.30001792",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
     "firebase": "^10.3.0",
