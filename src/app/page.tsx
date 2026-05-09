@@ -42,7 +42,7 @@ const Home = () => {
   }, [getPosts]);
 
   const filteredPosts = useMemo(() => {
-    return posts.filter(post => 
+    return posts.filter(post =>
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -53,11 +53,11 @@ const Home = () => {
     setIsAISearching(true);
     setAiResponse(null);
     try {
-      const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY || "");
+      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      
+
       const prompt = `Based on this video game description or question: "${searchQuery}", can you identify the game? If you're not sure, give a few possibilities. Keep it concise. Current community posts for context: ${posts.map(p => p.title).join(", ")}`;
-      
+
       const result = await model.generateContent(prompt);
       const response = await result.response;
       setAiResponse(response.text());
@@ -72,7 +72,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+
       <AddPost
         isOpen={isAddPostOpen}
         onClose={() => setIsAddPostOpen(false)}
@@ -100,14 +100,14 @@ const Home = () => {
             <div className="relative flex items-center gap-2 glass p-2 rounded-2xl border-primary/20">
               <div className="grow relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input 
-                  placeholder="Search games, descriptions, discussions..." 
+                <Input
+                  placeholder="Search games, descriptions, discussions..."
                   className="pl-10 bg-transparent border-none focus-visible:ring-0 text-lg h-12"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <Button 
+              <Button
                 onClick={handleAISearch}
                 disabled={isAISearching || !searchQuery}
                 className="bg-primary hover:bg-primary/80 text-primary-foreground font-bold h-12 px-6 gap-2"
@@ -140,7 +140,7 @@ const Home = () => {
             </h2>
             <p className="text-muted-foreground">The latest questions from the community garden.</p>
           </div>
-          <Button 
+          <Button
             onClick={() => setIsAddPostOpen(true)}
             className="bg-foreground text-background hover:bg-foreground/90 font-bold gap-2 gold-glow"
           >
