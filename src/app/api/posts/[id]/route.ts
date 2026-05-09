@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/firebase";
 import { getDoc, doc } from "firebase/firestore";
-import { PostType } from "@/models/post";
-import { PostReplyType } from "@/models/reply";
+import { PostType } from "@/types/post";
+import { PostReplyType } from "@/types/reply";
 import moment from "moment";
 
 type PostResponseType = {
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
       message: "Post Not found",
       data: {},
     });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+  } catch (error: unknown) {
+    return NextResponse.json({ error: error instanceof Error ? error.message : "Unknown error" }, { status: 400 });
   }
 }

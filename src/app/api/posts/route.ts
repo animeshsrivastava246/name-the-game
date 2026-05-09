@@ -8,9 +8,9 @@ import {
   doc,
   Timestamp,
 } from "firebase/firestore";
-import { PostType } from "@/models/post";
+import { PostType } from "@/types/post";
 import { generateUUID } from "@/helpers/uuid";
-import { AddPostRequestType } from "@/models/apiTypes";
+import { AddPostRequestType } from "@/types/apiTypes";
 import moment from 'moment';
 
 type PostResponseType = {
@@ -27,12 +27,12 @@ type PostResponseType = {
   };
 };
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // console.log("request :>> ", request.json());
     const q = query(collection(db, "posts"));
     const snapshots = await getDocs(q);
-    let data: PostType[] = snapshots.docs.map<PostType>((doc) => {
+    const data: PostType[] = snapshots.docs.map<PostType>((doc) => {
       const postResponse = { ...doc.data(), id: doc.id } as PostResponseType;
       const milliseconds =
         postResponse.created_at.seconds * 1000 +
@@ -48,8 +48,8 @@ export async function GET(request: NextRequest) {
       message: "Posts found",
       data,
     });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+  } catch (error: unknown) {
+    return NextResponse.json({ error: error instanceof Error ? error.message : "Unknown error" }, { status: 400 });
   }
 }
 
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       message: "Posts Added",
     });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+  } catch (error: unknown) {
+    return NextResponse.json({ error: error instanceof Error ? error.message : "Unknown error" }, { status: 400 });
   }
 }

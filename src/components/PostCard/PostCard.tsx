@@ -1,61 +1,45 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  Typography,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import styles from "./card.module.css";
-import { PostType } from "@/models/post";
+import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { PostType } from "@/types/post";
 
 function PostCard({ post }: { post: PostType }) {
-  const theme = useTheme();
   return (
-    <Card
-      style={{
-        backgroundColor: theme.palette.primary.light,
-        color: theme.palette.primary.contrastText,
-      }}
-      sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <CardHeader
-        title={post.name}
-        // subheader={`${post.created_at.split('T')[0]} | ${post.created_at.split('T')[1]}`}
-        subheader={post.created_at}
-        style={{
-          borderBottom: `1px solid ${theme.palette.divider}`,
-        }}
-      />
-      {post.image && post.image.length > 0 ? (
-        <CardMedia
-          component="div"
-          sx={{
-            pt: "56.25%",
-          }}
-          className={styles.post_image}
-          image={post.image}
-        />
-      ) : null}
-      <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h5" component="h2">
-          {post.title}
-        </Typography>
-        <Typography
-          style={{
-            height: post.image && post.image.length > 0 ? "4rem" : "10rem",
-          }}
-          className={styles.post_description}
-          variant="caption"
-        >
-          {post.description}
-        </Typography>
+    <Card className="h-full flex flex-col glass overflow-hidden transition-all duration-300 hover:gold-glow group">
+      <div className="relative aspect-video overflow-hidden">
+        {post.image ? (
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        ) : (
+          <div className="w-full h-full bg-secondary flex items-center justify-center text-muted-foreground">
+            No Image
+          </div>
+        )}
+        <div className="absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
+      </div>
+      
+      <CardHeader className="pb-2">
+        <div className="flex justify-between items-start">
+          <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
+            {post.title}
+          </CardTitle>
+        </div>
+        <CardDescription className="flex items-center gap-2 text-xs">
+          <span className="text-primary font-semibold">{post.name}</span>
+          <span className="text-muted-foreground">•</span>
+          <span>{post.created_at}</span>
+        </CardDescription>
+      </CardHeader>
+      
+      <CardContent className="grow">
+        <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed italic">
+          &quot;{post.description}&quot;
+        </p>
       </CardContent>
     </Card>
   );

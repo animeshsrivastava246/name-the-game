@@ -1,17 +1,25 @@
 // app/layout.tsx
 import { Providers } from "@/components/Providers";
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Outfit, Cinzel } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+});
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-cinzel",
+});
 
 export const metadata = {
   metadataBase: new URL("https://name-the-game.vercel.app"),
-  title: "NameTheGame",
-  description: "A community to identify games from photos or description.",
+  title: "NameTheGame | Immersive Garden",
+  description: "A community to identify games from photos or descriptions.",
   openGraph: {
-    title: "NameTheGame",
-    description: "A community to identify games from photos or description.",
+    title: "NameTheGame | Immersive Garden",
+    description: "A community to identify games from photos or descriptions.",
     url: "https://name-the-game.vercel.app/",
     siteName: "NameTheGame",
     type: "website",
@@ -19,10 +27,10 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "NameTheGame",
-    description: "A community to identify games from photos or description.",
+    description: "A community to identify games from photos or descriptions.",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icon.png",
   },
   manifest: "/manifest.webmanifest",
 };
@@ -34,7 +42,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${outfit.variable} ${cinzel.variable} font-sans`}>
         <Providers>{children}</Providers>
       </body>
     </html>

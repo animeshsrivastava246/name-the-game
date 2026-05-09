@@ -1,8 +1,7 @@
 "use client";
 
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "@/app/muiTheme";
+import { AuthProvider } from "@/context/AuthContext";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return <AuthProvider>{children}</AuthProvider>;
 }
