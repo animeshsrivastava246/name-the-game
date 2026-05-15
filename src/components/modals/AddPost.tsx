@@ -91,8 +91,11 @@ function AddPost({
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="image_link">Game Image Link</Label>
-              <Input id="image_link" name="image_link" placeholder="https://..." className="bg-background/50 border-primary/10 focus:border-primary" />
+              <div className="flex justify-between items-center">
+                <Label htmlFor="image_link">Game Image Link</Label>
+                <span className="text-[9px] text-muted-foreground uppercase font-bold tracking-tighter">Direct URL required</span>
+              </div>
+              <Input id="image_link" name="image_link" placeholder="https://example.com/image.jpg" className="bg-background/50 border-primary/10 focus:border-primary" />
             </div>
 
             <div className="grid gap-2">
