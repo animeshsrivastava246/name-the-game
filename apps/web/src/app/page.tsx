@@ -9,7 +9,6 @@ import { PostType } from "@/types/post";
 import AddPost from "@/components/modals/AddPost";
 import { Navbar } from "@/components/Navbar";
 import { Search, Sparkles, Plus, Loader2 } from "lucide-react";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const Home = () => {
   const [isAddPostOpen, setIsAddPostOpen] = useState(false);
@@ -53,17 +52,23 @@ const Home = () => {
     setIsAISearching(true);
     setAiResponse(null);
     try {
-      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-      const prompt = `Based on this video game description or question: "${searchQuery}", can you identify the game? If you're not sure, give a few possibilities. Keep it concise. Current community posts for context: ${posts.map(p => p.title).join(", ")}`;
-
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      setAiResponse(response.text());
+      const resp = await fetch("/api/ai-search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          searchQuery,
+          postsTitles: posts.map((p) => p.title),
+        }),
+      });
+      if (!resp.ok) {
+        const errorData = await resp.json();
+        throw new Error(errorData.error || "Failed fetching AI search");
+      }
+      const data = await resp.json();
+      setAiResponse(data.text);
     } catch (error) {
       console.error("AI Search failed", error);
-      setAiResponse("AI Search failed. Please check your API key.");
+      setAiResponse("AI Search failed. Please try again.");
     } finally {
       setIsAISearching(false);
     }
