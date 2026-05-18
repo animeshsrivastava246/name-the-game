@@ -8,6 +8,7 @@ Identify any video game from images or descriptions. Join elite guild of hunters
 [![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.3-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 [![Bun](https://img.shields.io/badge/Bun-Fast-f9f1e1?style=for-the-badge&logo=bun)](https://bun.sh/)
+[![Turborepo](https://img.shields.io/badge/Turborepo-Monorepo-red?style=for-the-badge&logo=turborepo)](https://turbo.build/)
 
 ---
 
@@ -21,6 +22,7 @@ Identify any video game from images or descriptions. Join elite guild of hunters
 
 ## 🛠️ Tech Stack
 
+- **Monorepo**: [Turborepo](https://turbo.build/)
 - **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
 - **Runtime**: [Bun](https://bun.sh/)
 - **Frontend**: [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
@@ -29,20 +31,27 @@ Identify any video game from images or descriptions. Join elite guild of hunters
 - **Backend**: [Firebase](https://firebase.google.com/)
 - **Components**: [Radix UI](https://www.radix-ui.com/)
 
-## 📂 Project Structure
+## 📂 Monorepo Structure (FSD)
 
 ```bash
-src/
-├── app/              # Next.js App Router routes
-│   ├── [id]/         # Dynamic game/post routes
-│   ├── discover/     # Game discovery section
-│   ├── forums/       # Community discussions
-│   ├── garden/       # Hunter leaderboard
-│   └── api/          # Serverless functions
-├── components/       # Shared UI components
-│   └── ui/           # Radix/Shadcn primitives
-├── types/            # TypeScript definitions
-└── lib/              # Utility functions and configs
+name-the-game/
+├── apps/
+│   └── web/            # Next.js 16 Web Application
+│       ├── src/
+│       │   ├── app/           # App-wide providers, global styles, layout
+│       │   │   └── providers/ # Contexts and providers (e.g. AuthContext)
+│       │   ├── entities/      # Business logic & components related to core models (Post, User)
+│       │   ├── features/      # User-actionable flows and features
+│       │   ├── shared/        # Reusable assets, components, utilities
+│       │   │   ├── config/    # Core configs (Firebase, etc.)
+│       │   │   ├── lib/       # Utility helper functions (UUID, utils)
+│       │   │   ├── types/     # Core type definitions
+│       │   │   └── ui/        # Atomic UI components (Buttons, Input, Card)
+│       │   └── widgets/       # Complex structural components (Navbar, Sidebar)
+│       └── tsconfig.json      # Path mappings to match Feature-Sliced Design
+├── packages/                  # Workspace package registry
+├── package.json               # Root workspace manifest
+└── turbo.json                 # Turborepo task pipeline configuration
 ```
 
 ## 🚀 Getting Started
@@ -67,7 +76,7 @@ src/
    ```
 
 3. Setup environment variables:
-   Create `.env` file in root.
+   Create `.env` file in `apps/web/`.
    ```env
    GEMINI_API_KEY=your_key_here
    NEXT_PUBLIC_FIREBASE_API_KEY=your_key
@@ -76,10 +85,15 @@ src/
 
 4. Run development server:
    ```bash
-   bun dev
+   bun run dev
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000).
+5. Build production bundle:
+   ```bash
+   bun run build
+   ```
+
+6. Open [http://localhost:3000](http://localhost:3000).
 
 ## 🛡️ License
 

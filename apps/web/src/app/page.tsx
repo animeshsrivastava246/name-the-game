@@ -4,10 +4,10 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import PostCard from "../components/PostCard/PostCard";
-import { PostType } from "../types/post";
-import AddPost from "../components/modals/AddPost";
-import { Navbar } from "../components/Navbar";
+import PostCard from "@/components/PostCard/PostCard";
+import { PostType } from "@/types/post";
+import AddPost from "@/components/modals/AddPost";
+import { Navbar } from "@/components/Navbar";
 import { Search, Sparkles, Plus, Loader2 } from "lucide-react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 

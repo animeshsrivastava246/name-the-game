@@ -23,9 +23,13 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/shared/ui/components/*"],
+      "@/lib/*": ["./src/shared/lib/*"],
+      "@/helpers/*": ["./src/shared/lib/*"],
+      "@/context/*": ["./src/app/providers/*"],
+      "@/types/*": ["./src/shared/types/*"],
+      "@/firebase": ["./src/shared/config/firebase"]
     },
     "forceConsistentCasingInFileNames": true
   },

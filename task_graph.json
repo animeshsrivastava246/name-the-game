@@ -1,90 +1,323 @@
 {
   "project": "Name The Game",
   "version": "0.2.0",
+  "metadata": {
+    "targetEnvironment": "Vercel / Cloudflare WAF",
+    "architecturePattern": "Monorepo (Turborepo) with Feature-Sliced Design (FSD)",
+    "packageManager": "Bun v1.3.14"
+  },
   "tasks": [
     {
       "id": "T1",
       "name": "Enterprise Architecture & Monorepo Setup",
+      "status": "completed",
+      "complexity": "Medium",
+      "dependencies": [],
       "description": "Migrate to a TurboRepo monorepo structure. Implement Feature-Sliced Design (FSD), strict ESLint/Prettier rules, and setup scalable API boundary patterns.",
-      "status": "pending",
-      "dependencies": []
+      "technicalSpecification": {
+        "workspaceConfig": "workspaces: ['apps/*', 'packages/*']",
+        "linter": "ESLint flat config with strict TS rules, Prettier configuration",
+        "directoryLayout": "FSD (app, pages, widgets, features, entities, shared)"
+      },
+      "subtasks": [
+        "Initialize Turborepo at root with turbo.json task configurations",
+        "Move Next.js 16 app into apps/web workspace",
+        "Establish Feature-Sliced Design folder structures under apps/web/src",
+        "Configure path aliases in tsconfig.json for shared, entities, features, widgets, app",
+        "Implement unified prettier and flat strict ESLint configurations"
+      ],
+      "acceptanceCriteria": [
+        "Project builds successfully using 'bun run build' through turbo pipeline",
+        "ESLint finds 0 warnings or errors in src directory",
+        "All cross-component imports resolve using clean FSD path mappings"
+      ]
     },
     {
       "id": "T2",
       "name": "Advanced Database & Distributed Caching",
-      "description": "Setup connection pooling with Prisma/Drizzle. Integrate Redis for distributed caching of high-traffic queries and rate-limiting. Implement database sharding strategies.",
       "status": "pending",
-      "dependencies": ["T1"]
+      "complexity": "High",
+      "dependencies": ["T1"],
+      "description": "Setup connection pooling with Prisma/Drizzle. Integrate Redis for distributed caching of high-traffic queries and rate-limiting. Implement database sharding strategies.",
+      "technicalSpecification": {
+        "orm": "Prisma with PgBouncer connection pooling",
+        "caching": "Redis (Upstash / Redis Labs) via ioredis",
+        "rateLimiter": "Upstash Rate Limiting / Token Bucket algorithm"
+      },
+      "subtasks": [
+        "Configure Prisma schemas with strict relations and connection pool URLs",
+        "Create Redis client wrapper with automatic reconnect and error boundaries",
+        "Implement query-level middleware to cache heavy post/reply fetches",
+        "Write custom rate-limiting NextJS middleware targeting high-traffic endpoints"
+      ],
+      "acceptanceCriteria": [
+        "Rate limiter blocks traffic correctly after configured threshold is hit",
+        "Redis hits reduce DB query latency to sub 10ms for cached posts",
+        "Database connections automatically pool without socket starvation leaks"
+      ]
     },
     {
       "id": "T3",
       "name": "Auth, RBAC & Enterprise Security",
-      "description": "Implement Clerk or NextAuth with Enterprise SSO. Setup Role-Based Access Control (Admin, Mod, Hunter), Web Application Firewall (WAF), and strict Rate Limiting.",
       "status": "pending",
-      "dependencies": ["T1"]
+      "complexity": "High",
+      "dependencies": ["T1"],
+      "description": "Implement Clerk or NextAuth with Enterprise SSO. Setup Role-Based Access Control (Admin, Mod, Hunter), Web Application Firewall (WAF), and strict Rate Limiting.",
+      "technicalSpecification": {
+        "authenticationProvider": "Clerk middleware or NextAuth",
+        "rbacModel": "Role-Based Access Control token claims (Admin, Moderator, Hunter, Casual)",
+        "waf": "Cloudflare WAF / Vercel firewall configurations"
+      },
+      "subtasks": [
+        "Integrate Clerk/NextAuth provider with Next.js 16 app structure",
+        "Map role claims into JWT session tokens",
+        "Create authorization wrappers and middleware hooks to guard routes",
+        "Setup CSRF protection, secure HTTP-only cookie parameters"
+      ],
+      "acceptanceCriteria": [
+        "Unauthenticated users cannot access restricted mutations/routes",
+        "Mod/Admin panels throw strict 403 Forbidden for Hunters/Casuals",
+        "Security headers (CSP, HSTS, X-Frame-Options) evaluate cleanly"
+      ]
     },
     {
       "id": "T4",
       "name": "Elasticsearch & Semantic Vector Search",
-      "description": "Deploy an Elasticsearch cluster for fuzzy text querying. Integrate a Vector Database (e.g., Pinecone/Milvus) for AI-driven semantic search based on game descriptions.",
       "status": "pending",
-      "dependencies": ["T1", "T2"]
+      "complexity": "High",
+      "dependencies": ["T1", "T2"],
+      "description": "Deploy an Elasticsearch cluster for fuzzy text querying. Integrate a Vector Database (e.g., Pinecone/Milvus) for AI-driven semantic search based on game descriptions.",
+      "technicalSpecification": {
+        "fulltextSearch": "Elasticsearch cloud cluster",
+        "vectorDatabase": "Pinecone with text-embedding-ada-002",
+        "ingestionPipeline": "Database triggers updating search indexes on mutations"
+      },
+      "subtasks": [
+        "Establish background connection pools for Pinecone and Elasticsearch",
+        "Create embedding ingestion hooks in post creation pipelines",
+        "Build hybrid search APIs combining fuzzy keyword query with vector distance calculation",
+        "Design fallback search handlers for degraded service scenarios"
+      ],
+      "acceptanceCriteria": [
+        "Fuzzy search tolerates up to 2 typos while returning relevant games",
+        "Vector search retrieves conceptually related games with cosine similarity > 0.75",
+        "Ingestion pipeline indexes newly added games in under 3 seconds"
+      ]
     },
     {
       "id": "T5",
       "name": "Global CDN & Automated Media Pipeline",
-      "description": "Architect a resilient media pipeline. Integrate Cloudflare/AWS CloudFront. Automatically compress, resize, and convert user uploads to WebP/AVIF formats.",
       "status": "pending",
-      "dependencies": ["T1"]
+      "complexity": "Medium",
+      "dependencies": ["T1"],
+      "description": "Architect a resilient media pipeline. Integrate Cloudflare/AWS CloudFront. Automatically compress, resize, and convert user uploads to WebP/AVIF formats.",
+      "technicalSpecification": {
+        "cdn": "Cloudflare Images or AWS CloudFront with S3",
+        "imageProcessing": "Sharp library or Cloudflare Image Resizing",
+        "storage": "S3-compatible bucket (R2 / AWS)"
+      },
+      "subtasks": [
+        "Setup signed upload URL endpoint for client direct-to-bucket uploads",
+        "Write serverless event trigger / sharp routine to auto-compress images to WebP/AVIF",
+        "Configure Cloudflare CDN caching headers and browser cache TTL",
+        "Configure custom domain with SSL certs for media subdomains"
+      ],
+      "acceptanceCriteria": [
+        "User uploads scale and automatically output responsive size configurations",
+        "Images compress by > 60% compared to raw formats without visible loss",
+        "CDN cache hit ratio remains above 80% for high-traffic assets"
+      ]
     },
     {
       "id": "T6",
       "name": "Real-time Community Infrastructure",
-      "description": "Deploy WebSockets/Pusher for real-time capabilities. Implement live typing indicators, instant reply updates, online presence, and real-time notification feeds.",
       "status": "pending",
-      "dependencies": ["T2", "T3"]
+      "complexity": "High",
+      "dependencies": ["T2", "T3"],
+      "description": "Deploy WebSockets/Pusher for real-time capabilities. Implement live typing indicators, instant reply updates, online presence, and real-time notification feeds.",
+      "technicalSpecification": {
+        "pubsub": "Pusher Channels / Socket.io / Supabase Realtime",
+        "stateSync": "React Query cache mutations or Zustand sync state"
+      },
+      "subtasks": [
+        "Create real-time notification listener hooks inside custom React providers",
+        "Implement live typing indicator channels triggered by keystrokes",
+        "Build server-side event dispatchers for new posts or replies",
+        "Implement instant messaging fallback for closed connection loops"
+      ],
+      "acceptanceCriteria": [
+        "Replying to a post updates all viewing clients in real-time under 200ms",
+        "Typing indicators hide correctly after 3 seconds of inactivity",
+        "Presence state accurately tracks active concurrent connections"
+      ]
     },
     {
       "id": "T7",
       "name": "AI-Powered Moderation & Auto-Tagging",
-      "description": "Integrate Gemini Vision API for automated NSFW image detection and text toxicity filtering. Build AI auto-tagging pipelines for incoming posts to reduce manual categorization.",
       "status": "pending",
-      "dependencies": ["T4"]
+      "complexity": "Medium",
+      "dependencies": ["T4"],
+      "description": "Integrate Gemini Vision API for automated NSFW image detection and text toxicity filtering. Build AI auto-tagging pipelines for incoming posts to reduce manual categorization.",
+      "technicalSpecification": {
+        "aiSdk": "Google Gen AI SDK (Gemini 1.5 Pro / Flash)",
+        "moderationEngine": "NSFW image categorization, Google Perspective / custom prompts",
+        "autoTagging": "Zero-shot classification prompt returning structured JSON tags"
+      },
+      "subtasks": [
+        "Integrate Gemini safety and moderation checks into post submission pipeline",
+        "Create validation schema for structured AI output parsing",
+        "Implement image analysis logic targeting NSFW categories before saving to database",
+        "Build fallback queues for flagged reviews requiring human validation"
+      ],
+      "acceptanceCriteria": [
+        "NSFW or highly toxic posts are blocked immediately and auto-flagged",
+        "AI generates accurate taxonomic tags (genre, theme, platform) in structured JSON",
+        "Submission pipeline handles AI timeouts gracefully without discarding posts"
+      ]
     },
     {
       "id": "T8",
-      "name": "Advanced SEO & Internationalization (i18n)",
-      "description": "Implement Programmatic SEO. Generate dynamic XML sitemaps, JSON-LD structured data schema (SoftwareApplication/DiscussionForumPosting), and integrate multi-language support.",
+      "name": "AI Recommendation & Personalized Game Discovery Engine",
       "status": "pending",
-      "dependencies": ["T1"]
+      "complexity": "High",
+      "dependencies": ["T1", "T3", "T7"],
+      "description": "Develop user profiles (age, location, preferences, playtime). Build Gemini AI recommendation pipelines, extensive game categories (RPG, Online, AAA/AA/A), search filters, global game catalogs, buy/redirection links, and personalization filters.",
+      "technicalSpecification": {
+        "aiRecommender": "Gemini 1.5 Flash using user profile contexts as structured prompt inputs",
+        "profileSchema": "Firestore UserProfile entity (age, location, preferences, playtime tier)",
+        "gameCatalog": "IGDB API integration / internal catalog cache"
+      },
+      "subtasks": [
+        "Create UserProfile model, UI configuration pages, and Firestore syncing hooks",
+        "Build dynamic category catalogs (AAA/AA/A tiers, genres like RPG, Online, Casual)",
+        "Develop recommendation endpoint merging user profile data with catalog filters",
+        "Integrate affiliate/buy redirection links to game store networks"
+      ],
+      "acceptanceCriteria": [
+        "Non-logged in users receive highly rated, popular trending defaults",
+        "Profiles correctly trigger personalized recommendation feeds matched to preferences",
+        "Filter system correctly maps AAA/AA/A tiers and categories without rendering empty lists"
+      ]
     },
     {
       "id": "T9",
-      "name": "3D Immersive Engine & WebGL Optimization",
-      "description": "Enhance React Three Fiber scenes. Implement lazy loading for 3D assets, Level of Detail (LOD) optimization, WebGL shaders, and 2D fallbacks for low-end mobile devices.",
+      "name": "Advanced SEO & Internationalization (i18n)",
       "status": "pending",
-      "dependencies": ["T1"]
+      "complexity": "Medium",
+      "dependencies": ["T1"],
+      "description": "Implement Programmatic SEO. Generate dynamic XML sitemaps, JSON-LD structured data schema (SoftwareApplication/DiscussionForumPosting), and integrate multi-language support.",
+      "technicalSpecification": {
+        "sitemapGenerator": "NextJS MetadataRoute dynamic sitemap resolver",
+        "schemaMarkup": "JSON-LD (SoftwareApplication and DiscussionForumPosting)",
+        "internationalization": "next-intl or i18next"
+      },
+      "subtasks": [
+        "Deploy dynamic sitemap fetching live routes and posts from Firestore",
+        "Build structured JSON-LD semantic data script components",
+        "Configure route middleware for automatic locale routing (en/es/ja)",
+        "Set robots.txt headers and dynamic open-graph metadata tags"
+      ],
+      "acceptanceCriteria": [
+        "Sitemap dynamically updates when new posts are committed to database",
+        "Rich search result schema evaluates with zero errors on schema validator tools",
+        "Locale headers successfully direct users to their preferred language segment"
+      ]
     },
     {
       "id": "T10",
-      "name": "High-End Motion & Interaction Architecture",
-      "description": "Deploy complex framer-motion orchestration. Create physics-based page transitions, scroll-linked parallax effects, and smooth layout animations for dynamic community feeds.",
+      "name": "3D Immersive Engine & WebGL Optimization",
       "status": "pending",
-      "dependencies": ["T9"]
+      "complexity": "High",
+      "dependencies": ["T1"],
+      "description": "Enhance React Three Fiber scenes. Implement lazy loading for 3D assets, Level of Detail (LOD) optimization, WebGL shaders, and 2D fallbacks for low-end mobile devices.",
+      "technicalSpecification": {
+        "renderer": "React Three Fiber (R3F) and Three.js",
+        "loaders": "GLTFLoader, DracoCompression decoder",
+        "uiIntegration": "Drei helpers and HTML annotations"
+      },
+      "subtasks": [
+        "Integrate Draco loader into GLTF pipeline to shrink heavy assets",
+        "Build fallback components representing 2D static alternatives for low-perf profiles",
+        "Implement WebGL level-of-detail (LOD) optimization to dynamically reduce polygons",
+        "Write custom GLSL shaders for interactive hover and particle states"
+      ],
+      "acceptanceCriteria": [
+        "3D scenes load smoothly on mid-tier mobile systems with solid 60 FPS",
+        "Draco assets reduce mesh transfer footprints by over 70%",
+        "Fallback 2D elements load successfully on hardware acceleration failures"
+      ]
     },
     {
       "id": "T11",
-      "name": "Enterprise Telemetry & Observability",
-      "description": "Integrate Sentry for distributed error tracking, PostHog for product analytics, and Datadog/NewRelic for backend infrastructure monitoring and Web Vitals tracking.",
+      "name": "High-End Motion & Interaction Architecture",
       "status": "pending",
-      "dependencies": ["T1", "T2"]
+      "complexity": "Medium",
+      "dependencies": ["T10"],
+      "description": "Deploy complex framer-motion orchestration. Create physics-based page transitions, scroll-linked parallax effects, and smooth layout animations for dynamic community feeds.",
+      "technicalSpecification": {
+        "animationLib": "Framer Motion 12",
+        "scrollTrigger": "Lenis smooth scroll / Framer scroll hooks",
+        "layoutSync": "AnimatePresence with shared layout keys"
+      },
+      "subtasks": [
+        "Setup smooth layout page transition orchestration inside next app shell templates",
+        "Build interactive physics hover animations for post card layouts",
+        "Implement spring-based micro-interactions across user actions (likes, comments)",
+        "Configure GPU-accelerated translate3d transformations for scroll paralaxes"
+      ],
+      "acceptanceCriteria": [
+        "Pages transition seamlessly with zero stuttering or content jump",
+        "Shared layouts morph shapes without layout shifts (CLS < 0.05)",
+        "Animations dynamically adapt/turn-off under reduced-motion preference settings"
+      ]
     },
     {
       "id": "T12",
-      "name": "CI/CD, E2E Testing & IaC",
-      "description": "Establish zero-downtime deployment pipelines. Write comprehensive Playwright E2E tests and Jest unit tests. Manage infrastructure via Terraform or Pulumi.",
+      "name": "Enterprise Telemetry & Observability",
       "status": "pending",
-      "dependencies": ["T1", "T11"]
+      "complexity": "Medium",
+      "dependencies": ["T1", "T2"],
+      "description": "Integrate Sentry for distributed error tracking, PostHog for product analytics, and Datadog/NewRelic for backend infrastructure monitoring and Web Vitals tracking.",
+      "technicalSpecification": {
+        "errorTracking": "Sentry SDK",
+        "analytics": "PostHog with session replay tracking",
+        "monitoring": "OpenTelemetry with Datadog exporter"
+      },
+      "subtasks": [
+        "Configure client and server-side Sentry boundaries with sourcemap uploads",
+        "Implement user event tracking hooks inside key features (searches, profile creation)",
+        "Build telemetry dashboards capturing CLS, LCP, INP metrics",
+        "Create alerts targeting 5xx status codes and slow response times"
+      ],
+      "acceptanceCriteria": [
+        "Unhandled exceptions automatically report to Sentry with source maps",
+        "Core Web Vitals track accurately and log under real user metrics (RUM)",
+        "Analytics session recordings capture correct user actions while shielding PII fields"
+      ]
+    },
+    {
+      "id": "T13",
+      "name": "CI/CD, E2E Testing & IaC",
+      "status": "pending",
+      "complexity": "High",
+      "dependencies": ["T1", "T12"],
+      "description": "Establish zero-downtime deployment pipelines. Write comprehensive Playwright E2E tests and Jest unit tests. Manage infrastructure via Terraform or Pulumi.",
+      "technicalSpecification": {
+        "testingRunner": "Playwright for E2E, Vitest / Jest for Unit tests",
+        "ciPipeline": "GitHub Actions with multi-stage caching",
+        "iac": "Terraform provisioning Cloudflare / Vercel integrations"
+      },
+      "subtasks": [
+        "Write Playwright tests simulating core user behaviors (search, posting, profiles)",
+        "Build unit testing mocks covering Firebase and Gemini API handlers",
+        "Setup GitHub Actions pipeline compiling, linting, and running E2E tests",
+        "Write Terraform manifests declaring application infrastructure parameters"
+      ],
+      "acceptanceCriteria": [
+        "CI pipelines successfully run E2E test runs on head branches before merge",
+        "Test coverage for API routes and shared utilities remains above 85%",
+        "Zero-downtime blue-green deployments complete flawlessly without page drops"
+      ]
     }
   ]
 }

@@ -45,14 +45,20 @@ export function Navbar() {
                 <LogOut className="w-5 h-5" />
               </Button>
               <div className="w-10 h-10 rounded-full border-2 border-primary/20 p-0.5 overflow-hidden">
-                <Image 
-                  src={user.photoURL || ""} 
-                  alt={user.displayName || ""} 
-                  width={40} 
-                  height={40} 
-                  className="w-full h-full rounded-full object-cover" 
-                  unoptimized
-                />
+                {user.photoURL ? (
+                  <Image 
+                    src={user.photoURL} 
+                    alt={user.displayName || ""} 
+                    width={40} 
+                    height={40} 
+                    className="w-full h-full rounded-full object-cover" 
+                    unoptimized
+                  />
+                ) : (
+                  <div className="w-full h-full rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary text-sm uppercase">
+                    {user.displayName ? user.displayName.charAt(0) : "U"}
+                  </div>
+                )}
               </div>
             </div>
           ) : (

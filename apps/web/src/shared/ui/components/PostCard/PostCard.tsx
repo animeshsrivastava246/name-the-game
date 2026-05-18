@@ -6,7 +6,7 @@ import { PostType } from "@/types/post";
 
 function PostCard({ post }: { post: PostType }) {
   const [imgSrc, setImgSrc] = useState(post.image);
-  const isValidUrl = post.image && (post.image.startsWith("http://") || post.image.startsWith("https://"));
+  const isValidUrl = imgSrc && (imgSrc.startsWith("http://") || imgSrc.startsWith("https://"));
 
   return (
     <Link href={`/${post.id}`} className="block h-full">
